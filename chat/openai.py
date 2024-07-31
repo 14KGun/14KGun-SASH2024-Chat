@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from openai import OpenAI
+from .common import ChatProvider
 import os
 
 
@@ -7,20 +8,29 @@ import os
 load_dotenv()
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY"] if "OPENAI_API_KEY" in os.environ else ""
 
-client = OpenAI(api_key=OPENAI_API_KEY)
 
-completion = client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=[
-        {
-            "role": "system",
-            "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair.",
-        },
-        {
-            "role": "user",
-            "content": "Compose a poem that explains the concept of recursion in programming.",
-        },
-    ],
-)
+class OpenaiChatProvider(ChatProvider):
+    def __init__(self):
+        self.client = OpenAI(api_key=OPENAI_API_KEY)
+        self.model_name = "gpt-4o-mini"
+        self.messages = [
+            {
+                "role": "system",
+                "content": self.systemContent,
+            },
+        ]
 
-print(completion.choices[0].message)
+    def add_message(self, message) -> str:
+        assert (
+            self.messages[-1]["role"] == "assistant"
+            or self.messages[-1]["role"] == "system"
+        )
+        self.messages.append({"role": "user", "content": message})
+
+        completion = self.client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=self.messages,
+        )
+        response = completion.choices[0].message.content
+        self.messages.append({"role": "assistant", "content": response})
+        return response
