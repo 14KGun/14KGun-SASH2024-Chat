@@ -29,3 +29,19 @@ testText[
 testText["question1"] = "미오페닐정을 임신 중에 먹어도 괜찮을까?"
 testText["question2"] = "나는 저녁에 갑각류를 먹으려고 해 문제가 있을까?"
 testText["question3"] = "나는 오늘 점심에 타이레놀을 먹었어. 같이 복용해도 문제없을까?"
+
+
+def testCompletion(chat_provider):
+    chat_provider.add_message(testText["info1"])
+    chat_provider.add_message(testText["info2"])
+
+    print("Q1. {}".format(testText["question1"]))
+    print(chat_provider.add_message(testText["question1"]))
+
+    print("")
+    print("Q2. {}".format(testText["question2"]))
+    print(chat_provider.add_message(testText["question2"]))
+
+    print("")
+    print("Q3. {}".format(testText["question3"]))
+    print(chat_provider.add_message(testText["question3"]))
