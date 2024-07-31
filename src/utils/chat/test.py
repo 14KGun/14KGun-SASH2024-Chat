@@ -1,3 +1,5 @@
+import json
+
 testText = {}
 
 testText[
@@ -45,3 +47,16 @@ def testCompletion(chat_provider):
     print("")
     print("Q3. {}".format(testText["question3"]))
     print(chat_provider.add_message(testText["question3"]))
+
+
+if __name__ == "__main__":
+    print(
+        json.dumps(
+            {
+                "drugs": [testText["info1"], testText["info2"]],
+                "user": testText["question1"],
+            },
+            indent=4,
+            ensure_ascii=False,
+        )
+    )
