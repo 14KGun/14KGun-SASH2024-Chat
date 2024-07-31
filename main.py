@@ -1,7 +1,19 @@
-from chat import ChatProvider
+from chat_clova import ChatProvider
+from test import testText
+
 
 if __name__ == "__main__":
     chat_provider = ChatProvider()
-    print(chat_provider.add_message("이기적 유전자, SF소설, 국내"))
-    print(chat_provider.add_message("1번 책에 대해서 더 자세히 설명해 줘"))
-    print(chat_provider.add_message("또 다른 책을 추천해 줘"))
+    chat_provider.add_message(testText["info1"])
+    chat_provider.add_message(testText["info2"])
+
+    print("Q1. {}".format(testText["question1"]))
+    print(chat_provider.add_message(testText["question1"]))
+
+    print("")
+    print("Q2. {}".format(testText["question2"]))
+    print(chat_provider.add_message(testText["question2"]))
+
+    print("")
+    print("Q3. {}".format(testText["question3"]))
+    print(chat_provider.add_message(testText["question3"]))
