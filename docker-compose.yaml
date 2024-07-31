@@ -1,0 +1,12 @@
+version: '3.2'
+
+services:
+  maridak-saerch:
+    container_name: maridak-search
+    build: .
+    ports:
+      - "${PORT?error}:80"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY?error}
+      - CLOVASTUDIO_API_KEY=${CLOVASTUDIO_API_KEY?error}
+      - CLOVASTUDIO_GATEWAY_API_KEY=${CLOVASTUDIO_GATEWAY_API_KEY?error}
